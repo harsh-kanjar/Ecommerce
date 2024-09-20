@@ -14,15 +14,24 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import productContext from '../context/products/productContext';
 import { ShoppingCartRounded } from '@mui/icons-material';
+import CircularProgress from '@mui/material/CircularProgress'; // Loader component
 
 function ProductCard(props) {
     const [cartItems, setCartItems] = useState([]);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [loading, setLoading] = useState(true); // New state for loader
     const context = useContext(productContext);
     const { host } = context;
 
     useEffect(() => {
-        props.getAllProduct();
+        // Simulate product fetching and hide loader after data is loaded
+        const fetchProducts = async () => {
+            setLoading(true);  // Show loader while fetching
+            await props.getAllProduct();
+            setLoading(false); // Hide loader after fetching
+        };
+
+        fetchProducts();
     }, []);
 
     const addToCart = async (productId, quantity) => {
@@ -116,74 +125,77 @@ function ProductCard(props) {
                 </Alert>
             </Snackbar>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2, margin: 2 }}>
-                {props.products.map((product) => {
-                    const discount = calculateDiscount(product.price);
-                    const originalPrice = product.price * (1 + discount / 100);
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <CircularProgress /> {/* Show loader while loading */}
+                </Box>
+            ) : (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2, margin: 2 }}>
+                    {props.products.map((product) => {
+                        const discount = calculateDiscount(product.price);
+                        const originalPrice = product.price * (1 + discount / 100);
 
-                    return (
-                        <Card key={product._id} sx={{ width: 320, maxWidth: '100%', boxShadow: 'lg' }}>
-                            <CardOverflow>
-                                <div style={{maxWidth:'200px', maxHeight:'400px',padding:'0 auto'}}>
-                                    <img
-                                        style={{maxWidth:'300px', maxHeight:'100%'}}
-                                        src={product.featuredImage}
-                                        alt={product.productName}
-                                        loading="lazy"
-                                    />
-                                </div>
-                            </CardOverflow>
-                            <CardContent>
-                                <Typography level="body-xs">{product.category}</Typography>
-                                <Link
-                                    to={`/productdetails/${product._id}`}
-                                    style={{ textDecoration: 'none' }}
-                                >
-                                    <Typography
-                                        fontWeight="md"
-                                        color="neutral"
-                                        textColor="text.primary"
-                                        overlay
-                                        endDecorator={<ArrowOutwardIcon />}
+                        return (
+                            <Card key={product._id} sx={{ width: 320, maxWidth: '100%', boxShadow: 'lg' }}>
+                                <CardOverflow>
+                                    <div style={{maxWidth:'200px', maxHeight:'400px',padding:'0 auto'}}>
+                                        <img
+                                            style={{maxWidth:'300px', maxHeight:'100%'}}
+                                            src={product.featuredImage}
+                                            alt={product.productName}
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                </CardOverflow>
+                                <CardContent>
+                                    <Typography level="body-xs">{product.category}</Typography>
+                                    <Link
+                                        to={`/productdetails/${product._id}`}
+                                        style={{ textDecoration: 'none' }}
                                     >
-                                        {product.productName}
+                                        <Typography
+                                            fontWeight="md"
+                                            color="neutral"
+                                            textColor="text.primary"
+                                            overlay
+                                            endDecorator={<ArrowOutwardIcon />}
+                                        >
+                                            {product.productName}
+                                        </Typography>
+                                    </Link>
+                                    <Typography
+                                        color='success'
+                                        level="title-lg"
+                                        sx={{ mt: 1, fontWeight: 'xl' }}
+                                        endDecorator={
+                                            <Chip component="span" size="sm" variant="soft" color="success">
+                                                {discount}% off
+                                            </Chip>
+                                        }
+                                    >
+                                        <del>₹{originalPrice.toFixed(2)}/-</del>  -  ₹{product.price}/-
                                     </Typography>
-                                </Link>
-                                <Typography
-                                    color='success'
-                                    level="title-lg"
-                                    sx={{ mt: 1, fontWeight: 'xl' }}
-                                    endDecorator={
-                                        <Chip component="span" size="sm" variant="soft" color="success">
-                                            {discount}% off
-                                        </Chip>
-                                    }
-                                >
-                                    <del>₹{originalPrice.toFixed(2)}/-</del>  -  ₹{product.price}/-
-                                </Typography>
-                                <Typography level="body-sm">
-                                    Hurry up, only <b>{product.countOfStock}</b> left in stock!
-                                </Typography>
-                                <Typography sx={{ marginTop: 1 }} variant="p" level="body-sm" gutterBottom>Select size in cart: available in all sizes</Typography>
-                            </CardContent>
-                            <CardOverflow>
-                                {
-                                    localStorage.getItem('token') ?
-
+                                    <Typography level="body-sm">
+                                        Hurry up, only <b>{product.countOfStock}</b> left in stock!
+                                    </Typography>
+                                    <Typography sx={{ marginTop: 1 }} variant="p" level="body-sm" gutterBottom>Select size in cart: available in all sizes</Typography>
+                                </CardContent>
+                                <CardOverflow>
+                                    {localStorage.getItem('token') ? (
                                         <Button onClick={() => handleCartClick(product._id)} variant="contained" startIcon={<ShoppingCartRounded />}>
                                             Add item
                                         </Button>
-
-                                        :
-                                        <Button title='Login Required' variant="contained" >
+                                    ) : (
+                                        <Button title='Login Required' variant="contained">
                                            <ShoppingCartRounded /> Add item
                                         </Button>
-                                }
-                            </CardOverflow>
-                        </Card>
-                    );
-                })}
-            </Box>
+                                    )}
+                                </CardOverflow>
+                            </Card>
+                        );
+                    })}
+                </Box>
+            )}
         </>
     );
 }

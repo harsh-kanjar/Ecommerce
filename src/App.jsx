@@ -28,7 +28,7 @@ function App() {
       <ProductsState>
         <Router>
           <Navbar />
-          <div className="container-fluid">
+          <div className="">
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/allpages" element={<AllPages />} />

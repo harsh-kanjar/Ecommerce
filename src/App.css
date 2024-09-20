@@ -15,3 +15,23 @@
   .mobile-cart-sec-1{
     width: '40%'
   }
+
+/* Apply custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f51b5; /* MUI primary color */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #303f9f; /* Darker shade for hover effect */
+  cursor: pointer;
+}
+ 
