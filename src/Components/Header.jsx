@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-
 import "../CSS/pages/header.css";
 import { FaUser } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
