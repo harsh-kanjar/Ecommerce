@@ -1,0 +1,17 @@
+import AddProduct from './AddProduct'
+import AllPages from './AllPages'
+import Cart from './Cart'
+import Gallery from './Gallery'
+import Home from './Home'
+import Login from './Login'
+import MakeOrder from './MakeOrder'
+import MyOrders from './MyOrders'
+import Order from './Order'
+import OrderSuccess from './OrderSuccess'
+import ProductDetails from './ProductDetails'
+import Products from './Products'
+import SignUp from './SignUp'
+import UploadImages from './UploadImages'
+import UserInfo from './UserInfo'
+
+export {AddProduct,AllPages,Cart,Gallery,Home,Login,SignUp,MakeOrder,MyOrders,Order,OrderSuccess,ProductDetails,Products,UploadImages,UserInfo}

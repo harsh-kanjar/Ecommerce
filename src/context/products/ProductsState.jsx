@@ -1,4 +1,4 @@
-import noteContext from "./productContext";
+import productContext from "./productContext";
 import { useState } from "react";
 
 function ProductsState(props) {
@@ -24,7 +24,6 @@ function ProductsState(props) {
 
     // Fetch cart
     const getAllCartItems = async () => {
-        // Api call
         const response = await fetch(`${host}/api/v1/product/getcartproducts`, {
             method: "GET",
             headers: {
@@ -63,17 +62,74 @@ function ProductsState(props) {
         }
     };
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    
+    const addToCart = async (productId, quantity) => {
+        try {
+            const response = await fetch(`${host}/api/v1/product/addtocart`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem('token'),
+                },
+                body: JSON.stringify({ productId, quantity }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Server responded with:", errorText);
+                throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+            }
+
+            setSnackbarOpen(true);  // Open Snackbar on success
+            const data = await response.json();
+            console.log("Product added to cart successfully:", data.cartItem);
+            setTimeout(() => setSnackbarOpen(false), 3000);
+        } catch (error) {
+            console.error("An error occurred while adding the product to the cart:", error);
+        }
+    };
+
+    const removeFromCart = async (cartItemId) => {
+        try {
+            const response = await fetch(`${host}/api/v1/product/removefromcart/${cartItemId}`, {
+                method: "DELETE",
+                headers: {
+                    "auth-token": localStorage.getItem('token'),
+                },
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Server responded with:", errorText);
+                throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log("Product removed from cart successfully:", data.cartItem);
+        } catch (error) {
+            console.error("An error occurred while removing the product from the cart:", error);
+        }
+    };
+
+    const calculateDiscount = (price) => {
+        if (price > 5000) return 20;
+        if (price > 2000) return 15;
+        if (price > 1000) return 10;
+        if (price > 500) return 5;
+        return 0;
+    };
 
     
     const [products, setProducts] = useState(productsInitial);
     const [cartProducts, setCartProducts] = useState(productsInitial);
 
     return (
-        <noteContext.Provider
-            value={{ host,products, getAllProduct, addProduct, setPrice, price, getAllCartItems }}
+        <productContext.Provider
+            value={{ host,products, getAllProduct, addProduct, setPrice, price, getAllCartItems , addToCart ,snackbarOpen,setSnackbarOpen, removeFromCart,calculateDiscount }}
         >
             {props.children}
-        </noteContext.Provider>
+        </productContext.Provider>
     );
 }
 export default ProductsState

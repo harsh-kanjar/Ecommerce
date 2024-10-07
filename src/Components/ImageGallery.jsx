@@ -1,5 +1,3 @@
-import { ShoppingBag } from "@mui/icons-material";
-import { Button } from "@mui/material";
 import {useEffect} from "react";
 function ImageGallery(props) {
     //  fetch all products

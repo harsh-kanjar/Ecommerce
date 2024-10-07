@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid, Typography, Button, Box } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';  

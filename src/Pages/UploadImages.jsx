@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { Box, Button } from '@mui/material';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
-import { useContext } from "react";
 import productContext from '../context/products/productContext';
 
 function UploadImages() {

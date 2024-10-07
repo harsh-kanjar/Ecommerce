@@ -1,14 +1,10 @@
-import { AppBar, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Container, Box, Badge } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
-import React, { useState } from 'react';
-import DialogueBox from './DialogueBox';
-import Search from './Search';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Home, ShoppingCart, AccountCircle } from '@mui/icons-material';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import { AppBar, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Container, Box } from '@mui/material';
+import { MenuIcon, LocalShippingIcon, Home, ShoppingCart } from '../Theme/Icons';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { DialogueBox, Search } from './index'
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -162,11 +158,11 @@ const Navbar = () => {
               />
             )}
 
-             
           </Box>
         </Toolbar>
       </Container>
     </StyledAppBar>
+
   );
 };
 

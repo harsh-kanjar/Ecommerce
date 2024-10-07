@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Container, Typography, Paper, Grid, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import productContext from '../context/products/productContext';
-import DialogueBox from '../Components/DialogueBox';
+import {DialogueBox} from '../Components';
 import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';

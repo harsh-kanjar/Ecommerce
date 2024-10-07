@@ -1,5 +1,4 @@
-import Crausel from '../Components/Crausel'
-import ImageListing from '../Components/ImageListing'
+import {Crausel,ImageListing} from '../Components'
 
 import Products from './Products'
 

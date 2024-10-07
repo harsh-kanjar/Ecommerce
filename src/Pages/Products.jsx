@@ -1,6 +1,6 @@
-import ProductCard from "../Components/ProductCard";
 import { useContext, useEffect } from "react";
 import productContext from "../context/products/productContext";
+import {ProductCard} from '../Components'
 
 function Products() {
   const context = useContext(productContext); // Fetching products

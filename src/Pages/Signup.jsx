@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import productContext from '../context/products/productContext';
 
-function Signup(props) {
+function SignUp(props) {
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
 
     const context = useContext(productContext);  
@@ -70,4 +70,4 @@ function Signup(props) {
     );
 }
 
-export default Signup;
+export default SignUp;
