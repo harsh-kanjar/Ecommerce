@@ -2,8 +2,8 @@ import productContext from "./productContext";
 import { useState } from "react";
 
 function ProductsState(props) {
-    const host = "https://server-1-ftit.onrender.com"
-    // const host = "http://localhost:5000";
+    // const host = "https://server-1-ftit.onrender.com"
+    const host = "http://localhost:5000";
     const productsInitial = [];
     const cartInitial = [];
     const [price,setPrice] = useState(0);
